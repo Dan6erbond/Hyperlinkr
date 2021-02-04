@@ -11,7 +11,7 @@
       </template>
     </b-navbar>
     <div class="container">
-      <h1 class="is-size-2 mb-4">Link Generator</h1>
+      <h1 class="is-size-2 mb-4">Generate Hyperlinks</h1>
       <form class="form mb-6" @submit.prevent="generate">
         <b-field
           position="is-centered"
