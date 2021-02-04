@@ -57,7 +57,7 @@
             />
           </p>
         </b-field>
-        <b-field>
+        <b-field :type="darkMode ? 'is-dark' : 'is-light'">
           <b-input
             placeholder="Title"
             v-model="title"
@@ -404,6 +404,7 @@ html {
 body {
   min-height: 100vh;
   color: #2c3e50;
+  padding-top: 20px;
 
   &.dark {
     background-color: #191a1c;
@@ -429,6 +430,21 @@ body {
 
     .help.is-dark {
       color: #c7c7c7;
+    }
+
+    .input.is-dark {
+      background-color: #2f2f2f;
+      color: white;
+
+      &::placeholder {
+        /* Chrome, Firefox, Opera, Safari 10.1+ */
+        color: #c7c7c7;
+      }
+
+      &:-ms-input-placeholder {
+        /* Internet Explorer 10-11 */
+        color: #c7c7c7;
+      }
     }
   }
 }
