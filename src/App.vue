@@ -1,10 +1,175 @@
 <template>
-  <div id="app"></div>
+  <div id="app">
+    <div class="container">
+      <h1 class="is-size-2 mb-4">Link Generator</h1>
+      <form class="form mb-6" @submit.prevent="generate">
+        <b-field
+          position="is-centered"
+          grouped
+          message="Enter the URL you want to turn into a Hyperlink."
+        >
+          <b-input placeholder="URL" expanded v-model="url" />
+          <p class="control">
+            <b-button
+              label="Generate"
+              type="is-primary"
+              native-type="submit"
+              :loading="loading"
+            />
+          </p>
+        </b-field>
+        <b-field>
+          <b-input
+            placeholder="Title"
+            v-model="title"
+            v-if="url"
+            :disabled="loading"
+          />
+        </b-field>
+      </form>
+      <div class="mb-6">
+        <p class="is-size-4">Markdown</p>
+        <div v-if="title && url">
+          <a :href="url">{{ title }}</a>
+        </div>
+        <div v-else>Please enter a URL to be converted to a hyperlink.</div>
+      </div>
+      <div class="mb-4">
+        <div
+          class="is-flex is-justify-content-space-between is-align-items-baseline"
+        >
+          <p class="is-size-4">Markdown</p>
+          <b-button
+            size="is-small"
+            icon-left="content-copy"
+            @click="copyMarkdown"
+            :disabled="!markdown"
+          >
+            Copy
+          </b-button>
+        </div>
+        <section>
+          <pre class="has-text-left">
+            <code>{{ markdown ? markdown : '' }}</code>
+          </pre>
+        </section>
+      </div>
+      <input type="hidden" id="markdown-copy" :value="markdown" />
+      <div>
+        <div
+          class="is-flex is-justify-content-space-between is-align-items-baseline"
+        >
+          <p class="is-size-4">HTML</p>
+          <b-button
+            size="is-small"
+            icon-left="content-copy"
+            @click="copyHtml"
+            :disabled="!html"
+          >
+            Copy
+          </b-button>
+        </div>
+        <section>
+          <pre class="has-text-left">
+            <code>{{ html ? html : '' }}</code>
+          </pre>
+        </section>
+      </div>
+      <input type="hidden" id="html-copy" :value="html" />
+    </div>
+  </div>
 </template>
 
 <script>
 export default {
   name: "App",
+  data: function () {
+    return {
+      url: "",
+      title: "",
+      loading: false,
+    };
+  },
+  computed: {
+    html() {
+      return (
+        this.url &&
+        this.title &&
+        !this.loading &&
+        `<a href="${this.url}">${this.title}</a>`
+      );
+    },
+    markdown() {
+      return (
+        this.url &&
+        this.title &&
+        !this.loading &&
+        `[${this.title}](${this.url})`
+      );
+    },
+  },
+  methods: {
+    async generate() {
+      this.loading = true;
+      try {
+        const res = await this.$axios(
+          `http://url-metadata.herokuapp.com/api/metadata?url=${this.url}`,
+        );
+        this.title = res.data.data.title;
+      } catch (e) {
+        console.error(e);
+      }
+      this.loading = false;
+    },
+    copyHtml() {
+      const copyElm = document.querySelector("#html-copy");
+      copyElm.setAttribute("type", "text");
+      copyElm.select();
+      try {
+        const successful = document.execCommand("copy");
+        if (successful) {
+          this.$buefy.toast.open({
+            message: "Successfully copied HTML hyperlink to clipboard!",
+            type: "is-success",
+          });
+        } else {
+          this.$buefy.toast.open({
+            message: "Error copying HTML hyperlink to clipboard.",
+            type: "is-danger",
+          });
+        }
+      } catch (err) {
+        console.error("Oops, unable to copy");
+      }
+
+      copyElm.setAttribute("type", "hidden");
+      window.getSelection().removeAllRanges();
+    },
+    copyMarkdown() {
+      const copyElm = document.querySelector("#markdown-copy");
+      copyElm.setAttribute("type", "text");
+      copyElm.select();
+      try {
+        const successful = document.execCommand("copy");
+        if (successful) {
+          this.$buefy.toast.open({
+            message: "Successfully copied markdown hyperlink to clipboard!",
+            type: "is-success",
+          });
+        } else {
+          this.$buefy.toast.open({
+            message: "Error copying markdown hyperlink to clipboard.",
+            type: "is-danger",
+          });
+        }
+      } catch (err) {
+        console.error("Oops, unable to copy");
+      }
+
+      copyElm.setAttribute("type", "hidden");
+      window.getSelection().removeAllRanges();
+    },
+  },
 };
 </script>
 
@@ -15,6 +180,19 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  max-width: 720px;
+  margin: 140px auto 0;
+}
+
+.form {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.copy-notification {
+  position: fixed !important;
+  width: 480px;
+  top: 20px;
+  right: 20px;
 }
 </style>
