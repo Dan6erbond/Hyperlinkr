@@ -14,7 +14,7 @@
       <h1 class="is-size-2 mb-4">Generate Hyperlinks</h1>
       <form class="form mb-6" @submit.prevent="generate">
         <b-field
-          :type="url && urlValid ? 'is-light' : 'is-danger'"
+          :type="!url || urlValid ? 'is-light' : 'is-danger'"
           position="is-centered"
           grouped
           message="Enter the URL you want to turn into a Hyperlink."
