@@ -81,14 +81,30 @@
 </template>
 
 <script>
+import update from "./mixins/update";
+
 export default {
   name: "App",
+  mixins: [update],
   data: function () {
     return {
       url: "",
       title: "",
       loading: false,
     };
+  },
+  watch: {
+    updateExists(newVal) {
+      if (newVal) {
+        this.$buefy.snackbar.open({
+          message: "An app update is available.",
+          actionText: "Update",
+          onAction: () => {
+            this.refreshApp();
+          },
+        });
+      }
+    },
   },
   computed: {
     html() {
