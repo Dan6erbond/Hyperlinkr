@@ -18,7 +18,17 @@
           grouped
           message="Enter the URL you want to turn into a Hyperlink."
         >
-          <b-input placeholder="URL" expanded v-model="url" />
+          <div class="control is-expanded input-container">
+            <b-input placeholder="URL" v-model="url" />
+            <b-button
+              icon-left="content-paste"
+              :class="['paste-clipboard-button', !clipboardText && 'hide']"
+              type="is-light"
+              @click="paste"
+            >
+              Paste Text From Clipboard
+            </b-button>
+          </div>
           <p class="control">
             <b-button
               label="Generate"
@@ -107,6 +117,9 @@ export default {
       url: "",
       title: "",
       loading: false,
+      clipboardText: "",
+      lastClipboardText: "",
+      clipboardInterval: null,
     };
   },
   watch: {
@@ -201,6 +214,31 @@ export default {
       copyElm.setAttribute("type", "hidden");
       window.getSelection().removeAllRanges();
     },
+    paste() {
+      this.url = this.clipboardText;
+      this.lastClipboardText = this.clipboardText;
+      this.clipboardText = "";
+    },
+  },
+  mounted() {
+    navigator.permissions.query({ name: "clipboard-read" }).then((result) => {
+      if (result.state === "granted" || result.state === "prompt") {
+        const interval = setInterval(() => {
+          navigator.clipboard.readText().then((text) => {
+            if (
+              text !== this.clipboardText &&
+              text !== this.lastClipboardText
+            ) {
+              this.clipboardText = text;
+            }
+          });
+        }, 500);
+        this.clipboardInterval = interval;
+      }
+    });
+  },
+  beforeDestroy() {
+    this.clipboardInterval && clearInterval(this.clipboardInterval);
   },
 };
 </script>
@@ -235,6 +273,26 @@ export default {
 
 .navbar-brand {
   align-items: center !important;
+}
+
+.input-container {
+  position: relative;
+
+  .paste-clipboard-button {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    margin-top: 2px;
+    justify-content: start;
+    opacity: 1;
+    transition: all ease-in-out 230ms;
+    z-index: 50;
+
+    &.hide {
+      opacity: 0;
+      margin-top: -2px;
+    }
+  }
 }
 
 @media only screen and (max-height: 750px) {
