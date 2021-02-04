@@ -113,7 +113,7 @@ export default {
       this.loading = true;
       try {
         const res = await this.$axios(
-          `http://url-metadata.herokuapp.com/api/metadata?url=${this.url}`,
+          `https://url-metadata.herokuapp.com/api/metadata?url=${this.url}`,
         );
         this.title = res.data.data.title;
       } catch (e) {
@@ -182,6 +182,7 @@ export default {
   color: #2c3e50;
   max-width: 720px;
   margin: 140px auto 0;
+  padding: 0 1.5rem;
 }
 
 .form {
