@@ -1,15 +1,19 @@
 <template>
   <div id="app">
-    <b-navbar shadow :mobile-burger="false" fixed-top>
-      <template #brand>
+    <nav
+      role="navigation"
+      aria-label="main navigation"
+      class="navbar is-fixed-top has-shadow"
+    >
+      <div class="navbar-brand">
         <img
           src="img/icons/icon.png"
           alt="Hyperlinkr"
           class="navbar-logo ml-2"
         />
         <span class="is-size-3 is-family-primary ml-2">Hyperlinkr</span>
-      </template>
-    </b-navbar>
+      </div>
+    </nav>
     <div class="container">
       <h1 class="is-size-2 mb-4">Generate Hyperlinks</h1>
       <form class="form mb-6" @submit.prevent="generate">
@@ -131,29 +135,30 @@
         </p>
       </div>
     </div>
-    <b-navbar
-      :mobile-burger="false"
-      fixed-bottom
-      class="is-hidden-desktop bottom-nav"
+    <nav
+      role="navigation"
+      aria-label="action-buttons"
+      class="navbar is-hidden-desktop bottom-nav is-fixed-bottom"
       v-if="clipboardText || canCopy"
-      active
     >
-      <template #start>
-        <div v-if="canCopy" class="buttons">
-          <b-button icon-left="content-copy" @click="copyHtml" class="mr-2">
-            Copy HTML
-          </b-button>
-          <b-button icon-left="content-copy" @click="copyMarkdown">
-            Copy Markdown
-          </b-button>
+      <div class="navbar-menu">
+        <div class="navbar-start">
+          <div v-if="canCopy" class="buttons">
+            <b-button icon-left="content-copy" @click="copyHtml" class="mr-2">
+              Copy HTML
+            </b-button>
+            <b-button icon-left="content-copy" @click="copyMarkdown">
+              Copy Markdown
+            </b-button>
+          </div>
+          <div v-else-if="clipboardText" class="buttons">
+            <b-button icon-left="content-copy" @click="paste">
+              Paste Text From Clipboard
+            </b-button>
+          </div>
         </div>
-        <div v-else-if="clipboardText" class="buttons">
-          <b-button icon-left="content-copy" @click="paste">
-            Paste Text From Clipboard
-          </b-button>
-        </div>
-      </template>
-    </b-navbar>
+      </div>
+    </nav>
   </div>
 </template>
 
@@ -382,6 +387,7 @@ export default {
     padding: 0;
     box-shadow: none;
     flex: 1;
+    display: block !important;
 
     .navbar-start {
       .buttons {
