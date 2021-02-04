@@ -13,12 +13,24 @@
         />
         <span class="is-size-3 is-family-primary ml-2">Hyperlinkr</span>
       </div>
+      <div class="navbar-menu">
+        <div class="navbar-end is-align-items-center">
+          <b-button
+            :type="darkMode ? 'is-dark' : 'is-text'"
+            size="is-medium"
+            @click="darkMode = !darkMode"
+            :icon-left="darkMode ? 'brightness-5' : 'brightness-7'"
+          />
+        </div>
+      </div>
     </nav>
     <div class="container">
       <h1 class="is-size-2 mb-4">Generate Hyperlinks</h1>
       <form class="form mb-6" @submit.prevent="generate">
         <b-field
-          :type="!url || urlValid ? 'is-light' : 'is-danger'"
+          :type="
+            !url || urlValid ? (darkMode ? 'is-dark' : 'is-light') : 'is-danger'
+          "
           position="is-centered"
           grouped
           message="Enter the URL you want to turn into a Hyperlink."
@@ -28,7 +40,7 @@
             <b-button
               icon-left="content-paste"
               :class="['paste-clipboard-button', !clipboardText && 'hide']"
-              type="is-light"
+              :type="darkMode ? 'is-dark' : 'is-light'"
               @click="paste"
             >
               Paste Text From Clipboard
@@ -144,15 +156,28 @@
       <div class="navbar-menu">
         <div class="navbar-start">
           <div v-if="canCopy" class="buttons">
-            <b-button icon-left="content-copy" @click="copyHtml" class="mr-2">
+            <b-button
+              icon-left="content-copy"
+              @click="copyHtml"
+              class="mr-2"
+              :type="darkMode ? 'is-dark' : 'is-light'"
+            >
               Copy HTML
             </b-button>
-            <b-button icon-left="content-copy" @click="copyMarkdown">
+            <b-button
+              icon-left="content-copy"
+              @click="copyMarkdown"
+              :type="darkMode ? 'is-dark' : 'is-light'"
+            >
               Copy Markdown
             </b-button>
           </div>
           <div v-else-if="clipboardText" class="buttons">
-            <b-button icon-left="content-copy" @click="paste">
+            <b-button
+              icon-left="content-copy"
+              @click="paste"
+              :type="darkMode ? 'is-dark' : 'is-light'"
+            >
               Paste Text From Clipboard
             </b-button>
           </div>
@@ -176,6 +201,7 @@ export default {
       clipboardText: "",
       lastClipboardText: "",
       clipboardInterval: null,
+      darkMode: true,
     };
   },
   watch: {
@@ -189,6 +215,18 @@ export default {
           },
         });
       }
+    },
+    darkMode: {
+      immediate: true,
+      handler(to) {
+        if (to) {
+          document.body.classList.add("dark");
+          localStorage.setItem("theme", "dark");
+        } else {
+          document.body.classList.remove("dark");
+          localStorage.setItem("theme", "light");
+        }
+      },
     },
   },
   computed: {
@@ -320,6 +358,23 @@ export default {
         this.clipboardInterval = interval;
       }
     });
+
+    const theme = localStorage.getItem("theme");
+
+    if (theme === "light") {
+      this.darkMode = false;
+    } else if (!theme) {
+      const userPrefersLight =
+        window.matchMedia &&
+        window.matchMedia("(prefers-color-scheme: light)").matches;
+
+      if (userPrefersLight) {
+        this.darkMode = false;
+        localStorage.setItem("theme", "light");
+      } else {
+        localStorage.setItem("theme", "dark");
+      }
+    }
   },
   beforeDestroy() {
     this.clipboardInterval && clearInterval(this.clipboardInterval);
@@ -336,6 +391,36 @@ export default {
   color: #2c3e50;
 }
 
+html {
+  background-color: transparent !important;
+}
+
+body {
+  min-height: 100vh;
+
+  &.dark {
+    background-color: #191a1c;
+
+    .navbar {
+      background-color: #191a1c !important;
+      box-shadow: 0 2px 0 0 #131414 !important;
+
+      .navbar-menu {
+        background-color: #191a1c !important;
+      }
+    }
+
+    .box {
+      background-color: #2f2f2f;
+    }
+
+    pre {
+      background-color: #2f2f2f;
+      color: #c7c7c7;
+    }
+  }
+}
+
 .container {
   max-width: 720px !important;
   margin: 140px auto 0 !important;
@@ -345,6 +430,13 @@ export default {
 .form {
   max-width: 600px;
   margin: 0 auto;
+}
+
+.navbar {
+  .navbar-menu {
+    display: block !important;
+    box-shadow: none !important;
+  }
 }
 
 .navbar-logo {
@@ -387,7 +479,6 @@ export default {
     padding: 0;
     box-shadow: none;
     flex: 1;
-    display: block !important;
 
     .navbar-start {
       .buttons {
