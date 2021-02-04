@@ -275,9 +275,12 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  max-width: 720px;
   margin: 140px auto 0;
   padding: 0 1.5rem;
+}
+
+.container {
+  max-width: 720px !important;
 }
 
 .form {
