@@ -1,5 +1,15 @@
 <template>
   <div id="app">
+    <b-navbar shadow :mobile-burger="false" fixed-top>
+      <template #brand>
+        <img
+          src="img/icons/icon.png"
+          alt="Hyperlinkr"
+          class="navbar-logo ml-2"
+        />
+        <span class="is-size-3 is-family-primary ml-2">Hyperlinkr</span>
+      </template>
+    </b-navbar>
     <div class="container">
       <h1 class="is-size-2 mb-4">Link Generator</h1>
       <form class="form mb-6" @submit.prevent="generate">
@@ -30,7 +40,13 @@
       <div class="mb-6">
         <p class="is-size-4">Preview</p>
         <div v-if="title && url">
-          <a :href="url">{{ title }}</a>
+          <div class="box">
+            <a :href="url">{{ title }}</a>
+          </div>
+          <p class="has-text-grey">
+            Your hyperlink will appear like this on platforms which support
+            markdown or HTML syntax.
+          </p>
         </div>
         <div v-else>Please enter a URL to be converted to a hyperlink.</div>
       </div>
@@ -211,6 +227,14 @@ export default {
   width: 480px;
   top: 20px;
   right: 20px;
+}
+
+.navbar-logo {
+  height: 2rem;
+}
+
+.navbar-brand {
+  align-items: center !important;
 }
 
 @media only screen and (max-height: 750px) {
