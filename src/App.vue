@@ -83,7 +83,7 @@
         </section>
       </div>
       <input type="hidden" id="markdown-copy" :value="markdown" />
-      <div>
+      <div class="mb-6">
         <div
           class="is-flex is-justify-content-space-between is-align-items-baseline"
         >
@@ -104,6 +104,31 @@
         </section>
       </div>
       <input type="hidden" id="html-copy" :value="html" />
+      <div class="mb-4">
+        <p class="is-size-4">What is Hyperlinkr?</p>
+        <p class="has-text-grey">
+          Hyperlinkr is a simple, Vue-based PWA that uses the
+          <a href="https://url-metadata.herokuapp.com/">Url Metadata API</a>
+          under the hood.
+          <br />
+          <br />
+          It supports directly pasting URLs from your clipboard if they are
+          valid URLs, and in cases where URLs cannot be parsed by the API the
+          title input field allows you to customize your markdown/HTML output.
+          <br />
+          <br />
+          Outputs are generated as markdown (GitHub, Reddit, etc. flavor) as
+          well as HTML anchor tags, and can directly be copied to your clipboard
+          using the convenient buttons above the raw output.
+          <br />
+          <br />
+          &#169; 2021, RaviAnand M.
+          <br />
+          <a href="https://ravianand.web.app" target="_blank">My Website</a>
+          <br />
+          <a href="https://github.com/Dan6erbond" target="_blank">GitHub</a>
+        </p>
+      </div>
     </div>
   </div>
 </template>
