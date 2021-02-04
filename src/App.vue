@@ -308,7 +308,7 @@ export default {
 
   .paste-clipboard-button {
     position: absolute;
-    width: 100%;
+    min-width: 100%;
     left: 0;
     margin-top: 2px;
     justify-content: start;
