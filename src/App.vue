@@ -14,12 +14,13 @@
       <h1 class="is-size-2 mb-4">Generate Hyperlinks</h1>
       <form class="form mb-6" @submit.prevent="generate">
         <b-field
+          :type="url && urlValid ? 'is-light' : 'is-danger'"
           position="is-centered"
           grouped
           message="Enter the URL you want to turn into a Hyperlink."
         >
           <div class="control is-expanded input-container">
-            <b-input placeholder="URL" v-model="url" />
+            <b-input placeholder="URL" v-model="url" type="url" />
             <b-button
               icon-left="content-paste"
               :class="['paste-clipboard-button', !clipboardText && 'hide']"
@@ -35,6 +36,7 @@
               type="is-primary"
               native-type="submit"
               :loading="loading"
+              :disabled="url && !validURL"
             />
           </p>
         </b-field>
@@ -152,9 +154,16 @@ export default {
         `[${this.title}](${this.url})`
       );
     },
+    urlValid() {
+      return this.validURL(this.url);
+    },
   },
   methods: {
     async generate() {
+      if (!this.urlValid) {
+        return;
+      }
+
       this.loading = true;
       try {
         const res = await this.$axios(
@@ -219,19 +228,35 @@ export default {
       this.lastClipboardText = this.clipboardText;
       this.clipboardText = "";
     },
+    validURL(str) {
+      const pattern = new RegExp(
+        "^(https?:\\/\\/)?" + // protocol
+          "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
+          "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
+          "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
+          "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+          "(\\#[-a-z\\d_]*)?$",
+        "i", // fragment locator
+      );
+      return !!pattern.test(str);
+    },
   },
   mounted() {
     navigator.permissions.query({ name: "clipboard-read" }).then((result) => {
       if (result.state === "granted" || result.state === "prompt") {
         const interval = setInterval(() => {
-          navigator.clipboard.readText().then((text) => {
-            if (
-              text !== this.clipboardText &&
-              text !== this.lastClipboardText
-            ) {
-              this.clipboardText = text;
-            }
-          });
+          navigator.clipboard
+            .readText()
+            .then((text) => {
+              if (
+                text !== this.clipboardText &&
+                text !== this.lastClipboardText &&
+                this.validURL(text)
+              ) {
+                this.clipboardText = text;
+              }
+            })
+            .catch(console.warn);
         }, 500);
         this.clipboardInterval = interval;
       }
