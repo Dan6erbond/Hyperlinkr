@@ -28,7 +28,7 @@
         </b-field>
       </form>
       <div class="mb-6">
-        <p class="is-size-4">Markdown</p>
+        <p class="is-size-4">Preview</p>
         <div v-if="title && url">
           <a :href="url">{{ title }}</a>
         </div>
