@@ -77,9 +77,9 @@
           </b-button>
         </div>
         <section>
-          <pre class="has-text-left">
-            <code>{{ markdown ? markdown : '' }}</code>
-          </pre>
+          <pre
+            class="has-text-left"
+          ><code>{{ markdown ? markdown : '' }}</code></pre>
         </section>
       </div>
       <input type="hidden" id="markdown-copy" :value="markdown" />
@@ -98,9 +98,7 @@
           </b-button>
         </div>
         <section>
-          <pre class="has-text-left">
-            <code>{{ html ? html : '' }}</code>
-          </pre>
+          <pre class="has-text-left"><code>{{ html ? html : '' }}</code></pre>
         </section>
       </div>
       <input type="hidden" id="html-copy" :value="html" />
