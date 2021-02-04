@@ -125,7 +125,7 @@
           <br />
           <a href="https://ravianand.web.app" target="_blank">My Website</a>
           <br />
-          <a href="https://github.com/Dan6erbond" target="_blank">GitHub</a>
+          <a href="https://github.com/Dan6erbond/Hyperlinkr" target="_blank">GitHub Repository</a>
         </p>
       </div>
     </div>
