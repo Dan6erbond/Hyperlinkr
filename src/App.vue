@@ -20,6 +20,7 @@
             size="is-medium"
             @click="darkMode = !darkMode"
             :icon-left="darkMode ? 'brightness-5' : 'brightness-7'"
+            class="mr-2"
           />
         </div>
       </div>
@@ -88,6 +89,7 @@
             icon-left="content-copy"
             @click="copyMarkdown"
             :disabled="!markdown"
+            :type="darkMode ? 'is-dark' : 'is-light'"
           >
             Copy
           </b-button>
@@ -109,6 +111,7 @@
             icon-left="content-copy"
             @click="copyHtml"
             :disabled="!html"
+            :type="darkMode ? 'is-dark' : 'is-light'"
           >
             Copy
           </b-button>
@@ -388,7 +391,6 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
 }
 
 html {
@@ -397,9 +399,11 @@ html {
 
 body {
   min-height: 100vh;
+  color: #2c3e50;
 
   &.dark {
     background-color: #191a1c;
+    color: white !important;
 
     .navbar {
       background-color: #191a1c !important;
@@ -433,6 +437,9 @@ body {
 }
 
 .navbar {
+  display: flex;
+  justify-content: space-between;
+
   .navbar-menu {
     display: block !important;
     box-shadow: none !important;
