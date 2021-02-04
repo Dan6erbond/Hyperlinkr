@@ -214,7 +214,7 @@ export default {
 }
 
 @media only screen and (max-height: 750px) {
-  body {
+  #app {
     margin: 60px auto 0;
   }
 }
