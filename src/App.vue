@@ -212,4 +212,10 @@ export default {
   top: 20px;
   right: 20px;
 }
+
+@media only screen and (max-height: 750px) {
+  body {
+    margin: 60px auto 0;
+  }
+}
 </style>
