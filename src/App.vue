@@ -131,6 +131,29 @@
         </p>
       </div>
     </div>
+    <b-navbar
+      :mobile-burger="false"
+      fixed-bottom
+      class="is-hidden-desktop bottom-nav"
+      v-if="clipboardText || (title && url)"
+      active
+    >
+      <template #start>
+        <div v-if="title && url" class="buttons">
+          <b-button icon-left="content-copy" @click="copyHtml" class="mr-2">
+            Copy HTML
+          </b-button>
+          <b-button icon-left="content-copy" @click="copyMarkdown">
+            Copy Markdown
+          </b-button>
+        </div>
+        <div v-else-if="clipboardText" class="buttons">
+          <b-button icon-left="content-copy" @click="paste">
+            Paste Text From Clipboard
+          </b-button>
+        </div>
+      </template>
+    </b-navbar>
   </div>
 </template>
 
@@ -278,7 +301,8 @@ export default {
               if (
                 text !== this.clipboardText &&
                 text !== this.lastClipboardText &&
-                this.validURL(text)
+                this.validURL(text) &&
+                text !== this.url
               ) {
                 this.clipboardText = text;
               }
@@ -346,6 +370,32 @@ export default {
     &.hide {
       opacity: 0;
       margin-top: -2px;
+    }
+  }
+}
+
+.bottom-nav {
+  display: flex;
+  padding: 1rem;
+
+  .navbar-brand {
+    display: none;
+  }
+
+  .navbar-menu {
+    padding: 0;
+    box-shadow: none;
+    flex: 1;
+
+    .navbar-start {
+      .buttons {
+        display: flex;
+
+        .button {
+          margin: 0;
+          flex: 1;
+        }
+      }
     }
   }
 }
