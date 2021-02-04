@@ -422,6 +422,10 @@ body {
       background-color: #2f2f2f;
       color: #c7c7c7;
     }
+
+    .help.is-dark {
+      color: #c7c7c7;
+    }
   }
 }
 
