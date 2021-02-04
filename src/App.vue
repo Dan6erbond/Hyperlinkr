@@ -339,13 +339,6 @@ export default {
   margin: 0 auto;
 }
 
-.copy-notification {
-  position: fixed !important;
-  width: 480px;
-  top: 20px;
-  right: 20px;
-}
-
 .navbar-logo {
   height: 2rem;
 }
