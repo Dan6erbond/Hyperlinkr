@@ -275,12 +275,12 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin: 140px auto 0;
-  padding: 0 1.5rem;
 }
 
 .container {
   max-width: 720px !important;
+  margin: 140px auto 0 !important;
+  padding: 0 1.5rem importa !important;
 }
 
 .form {
@@ -324,8 +324,8 @@ export default {
 }
 
 @media only screen and (max-height: 750px) {
-  #app {
-    margin: 60px auto 0;
+  .container {
+    margin: 60px auto 0 !important;
   }
 }
 </style>
