@@ -280,7 +280,7 @@ export default {
 .container {
   max-width: 720px !important;
   margin: 140px auto 0 !important;
-  padding: 0 1.5rem importa !important;
+  padding: 0 1.5rem !important;
 }
 
 .form {
