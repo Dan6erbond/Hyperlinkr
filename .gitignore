@@ -21,3 +21,5 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+public/img/icons/dunplab-manifest-icon_2021-feb-04-183034.zip
+public/img/icons/favicon_package_v0.16.zip
