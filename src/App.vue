@@ -77,7 +77,11 @@
             markdown or HTML syntax.
           </p>
         </div>
-        <div v-else>Please enter a URL to be converted to a hyperlink.</div>
+        <div v-else>
+          <p :class="[darkMode && 'has-text-grey']">
+            Please enter a URL to be converted to a hyperlink.
+          </p>
+        </div>
       </div>
       <div class="mb-4">
         <div
