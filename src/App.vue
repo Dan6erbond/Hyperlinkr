@@ -51,7 +51,7 @@
       </form>
       <div class="mb-6">
         <p class="is-size-4">Preview</p>
-        <div v-if="title && url">
+        <div v-if="canCopy">
           <div class="box">
             <a :href="url">{{ title }}</a>
           </div>
@@ -135,11 +135,11 @@
       :mobile-burger="false"
       fixed-bottom
       class="is-hidden-desktop bottom-nav"
-      v-if="clipboardText || (title && url)"
+      v-if="clipboardText || canCopy"
       active
     >
       <template #start>
-        <div v-if="title && url" class="buttons">
+        <div v-if="canCopy" class="buttons">
           <b-button icon-left="content-copy" @click="copyHtml" class="mr-2">
             Copy HTML
           </b-button>
@@ -205,6 +205,9 @@ export default {
     },
     urlValid() {
       return this.validURL(this.url);
+    },
+    canCopy() {
+      return this.title && this.url && this.urlValid;
     },
   },
   methods: {
