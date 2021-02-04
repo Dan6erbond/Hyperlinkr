@@ -253,6 +253,7 @@ export default {
       this.url = this.clipboardText;
       this.lastClipboardText = this.clipboardText;
       this.clipboardText = "";
+      this.generate();
     },
     validURL(str) {
       const pattern = new RegExp(
