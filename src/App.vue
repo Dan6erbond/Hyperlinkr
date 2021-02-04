@@ -404,7 +404,7 @@ html {
 body {
   min-height: 100vh;
   color: #2c3e50;
-  padding-top: 20px;
+  padding-top: 40px !important;
 
   &.dark {
     background-color: #191a1c;
