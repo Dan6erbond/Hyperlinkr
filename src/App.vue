@@ -109,7 +109,8 @@
         <p class="has-text-grey">
           Hyperlinkr is a simple, Vue-based PWA that uses the
           <a href="https://url-metadata.herokuapp.com/">Url Metadata API</a>
-          under the hood.
+          under the hood to generate hyperlinks using the page title as the
+          text.
           <br />
           <br />
           It supports directly pasting URLs from your clipboard if they are
