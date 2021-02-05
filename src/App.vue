@@ -271,6 +271,15 @@ export default {
         return;
       }
 
+      if (this.url.match(/youtube.com\/watch/g)) {
+        const res = await this.$axios(
+          `https://noembed.com/embed?url=${this.url}`,
+        );
+        this.title = res.data.title;
+        this.metadata = res.data;
+        return;
+      }
+
       this.loading = true;
       try {
         const res = await this.$axios(
