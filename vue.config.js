@@ -29,8 +29,7 @@ module.exports = {
         },
       ],
       share_target: {
-        action: "/",
-        method: "GET",
+        action: "/index.html",
         params: {
           title: "title",
           url: "url",
