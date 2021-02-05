@@ -24,7 +24,7 @@ _axios.interceptors.request.use(
   function(error) {
     // Do something with request error
     return Promise.reject(error);
-  }
+  },
 );
 
 // Add a response interceptor
@@ -36,7 +36,7 @@ _axios.interceptors.response.use(
   function(error) {
     // Do something with response error
     return Promise.reject(error);
-  }
+  },
 );
 
 Plugin.install = function(Vue) {
@@ -46,13 +46,13 @@ Plugin.install = function(Vue) {
     axios: {
       get() {
         return _axios;
-      }
+      },
     },
     $axios: {
       get() {
         return _axios;
-      }
-    }
+      },
+    },
   });
 };
 
