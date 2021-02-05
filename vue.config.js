@@ -32,7 +32,7 @@ module.exports = {
         action: "/index.html",
         params: {
           title: "title",
-          url: "url",
+          text: "url",
         },
       },
     },
