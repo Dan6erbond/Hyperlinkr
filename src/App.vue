@@ -238,7 +238,10 @@ export default {
         this.url &&
         this.title &&
         !this.loading &&
-        `[${this.title}](${this.url})`
+        `[${this.title.replace(/(\[|\])/g, "\\$1")}](${this.url.replace(
+          /(\(|\))/g,
+          "\\$1",
+        )})`
       );
     },
     urlValid() {
