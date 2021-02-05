@@ -196,11 +196,12 @@
 
 <script>
 import update from "./mixins/update";
+import darkMode from "./mixins/darkMode";
 
 export default {
   name: "App",
-  mixins: [update],
-  data: function () {
+  mixins: [update, darkMode],
+  data() {
     return {
       url: "",
       title: "",
@@ -208,7 +209,6 @@ export default {
       clipboardText: "",
       lastClipboardText: "",
       clipboardInterval: null,
-      darkMode: true,
     };
   },
   watch: {
@@ -222,22 +222,6 @@ export default {
           },
         });
       }
-    },
-    darkMode: {
-      immediate: true,
-      handler(to, from) {
-        if (to) {
-          document.body.classList.add("dark");
-          if (from !== undefined) {
-            localStorage.setItem("theme", "dark");
-          }
-        } else {
-          document.body.classList.remove("dark");
-          if (from !== undefined) {
-            localStorage.setItem("theme", "light");
-          }
-        }
-      },
     },
   },
   computed: {
@@ -369,22 +353,6 @@ export default {
         this.clipboardInterval = interval;
       }
     });
-
-    const theme = localStorage.getItem("theme");
-
-    if (theme === "light") {
-      this.darkMode = false;
-    } else if (!theme) {
-      const userPrefersLight =
-        window.matchMedia &&
-        window.matchMedia("(prefers-color-scheme: light)").matches;
-
-      if (userPrefersLight) {
-        this.darkMode = false;
-      } else {
-        this.darkMode = true;
-      }
-    }
   },
   beforeDestroy() {
     this.clipboardInterval && clearInterval(this.clipboardInterval);
