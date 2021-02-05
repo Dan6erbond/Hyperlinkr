@@ -225,13 +225,17 @@ export default {
     },
     darkMode: {
       immediate: true,
-      handler(to) {
+      handler(to, from) {
         if (to) {
           document.body.classList.add("dark");
-          localStorage.setItem("theme", "dark");
+          if (from !== undefined) {
+            localStorage.setItem("theme", "dark");
+          }
         } else {
           document.body.classList.remove("dark");
-          localStorage.setItem("theme", "light");
+          if (from !== undefined) {
+            localStorage.setItem("theme", "light");
+          }
         }
       },
     },
@@ -377,9 +381,8 @@ export default {
 
       if (userPrefersLight) {
         this.darkMode = false;
-        localStorage.setItem("theme", "light");
       } else {
-        localStorage.setItem("theme", "dark");
+        this.darkMode = true;
       }
     }
   },
