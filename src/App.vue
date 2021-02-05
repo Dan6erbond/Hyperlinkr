@@ -356,6 +356,18 @@ export default {
         this.clipboardInterval = interval;
       }
     });
+
+    const params = new URLSearchParams(window.location.search);
+    const url = params.get("url");
+    const title = params.get("title");
+    if (url) {
+      this.url = url;
+      if (title) {
+        this.title = title;
+      } else {
+        this.generate();
+      }
+    }
   },
   beforeDestroy() {
     this.clipboardInterval && clearInterval(this.clipboardInterval);

@@ -1,6 +1,6 @@
 module.exports = {
-  chainWebpack: config => {
-    config.plugin("html").tap(args => {
+  chainWebpack: (config) => {
+    config.plugin("html").tap((args) => {
       args[0].title = "Hyperlinkr";
       return args;
     });
@@ -26,8 +26,15 @@ module.exports = {
           type: "image/png",
         },
       ],
+      share_target: {
+        action: "/",
+        method: "GET",
+        params: {
+          title: "title",
+          url: "url",
+        },
+      },
     },
-
     themeColor: "#00c4a7",
     msTileColor: "#363636",
     appleMobileWebAppCapable: "yes",
