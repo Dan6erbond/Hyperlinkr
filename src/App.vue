@@ -439,6 +439,10 @@ body {
   }
 }
 
+.button:focus {
+  box-shadow: none !important;
+}
+
 .container {
   max-width: 720px !important;
   margin: 140px auto 0 !important;
