@@ -151,7 +151,11 @@
           <a href="https://github.com/Dan6erbond/Hyperlinkr" target="_blank">
             GitHub Repository
           </a>
+          <b-button type="is-link" @click="showStats = !showStats">
+            Stats for Nerds
+          </b-button>
         </p>
+        <pre v-if="showStats">{{ stats }}</pre>
       </div>
     </div>
     <nav
@@ -209,6 +213,8 @@ export default {
       clipboardText: "",
       lastClipboardText: "",
       clipboardInterval: null,
+      showStats: false,
+      stats: null,
     };
   },
   watch: {
@@ -368,6 +374,10 @@ export default {
         this.generate();
       }
     }
+
+    this.stats = {
+      href: window.location.href,
+    };
   },
   beforeDestroy() {
     this.clipboardInterval && clearInterval(this.clipboardInterval);
@@ -440,8 +450,30 @@ body {
   }
 }
 
-.button:focus {
-  box-shadow: none !important;
+.button {
+  &:focus {
+    box-shadow: none !important;
+  }
+
+  &.is-link {
+    color: #3273dc !important;
+    margin: auto !important;
+    padding: 0 !important;
+    display: block !important;
+    text-align: center;
+    background: none !important;
+    height: auto !important;
+
+    & > span {
+      font-size: 1em;
+      font-weight: 400 !important;
+      line-height: 1.5;
+    }
+
+    &:hover {
+      color: #363636 !important;
+    }
+  }
 }
 
 .container {
