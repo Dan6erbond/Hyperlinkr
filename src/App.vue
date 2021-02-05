@@ -9,7 +9,7 @@
         <img
           src="img/icons/icon.png"
           alt="Hyperlinkr"
-          class="navbar-logo ml-2"
+          class="navbar-logo ml-4"
         />
         <span class="is-size-3 is-family-primary ml-2">Hyperlinkr</span>
       </div>
@@ -384,6 +384,10 @@ body {
     .navbar {
       background-color: #191a1c !important;
       box-shadow: 0 2px 0 0 #131414 !important;
+
+      .navbar-logo {
+        filter: invert(1);
+      }
 
       .navbar-menu {
         background-color: #191a1c !important;
