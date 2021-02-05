@@ -2,6 +2,8 @@ module.exports = {
   chainWebpack: (config) => {
     config.plugin("html").tap((args) => {
       args[0].title = "Hyperlinkr";
+      args[0].description =
+        "A simple web app to generate markdown and HTML hyperlinks using source metadata.";
       return args;
     });
   },
