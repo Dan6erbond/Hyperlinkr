@@ -125,7 +125,7 @@
         </section>
       </div>
       <input type="hidden" id="html-copy" :value="html" />
-      <div class="mb-4">
+      <div class="mb-6">
         <p class="is-size-4">What is Hyperlinkr?</p>
         <p class="has-text-grey">
           Hyperlinkr is a simple, Vue-based PWA that uses the
