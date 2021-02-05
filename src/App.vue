@@ -125,7 +125,7 @@
         </section>
       </div>
       <input type="hidden" id="html-copy" :value="html" />
-      <div class="mb-6 pb-6">
+      <div>
         <p class="is-size-4">What is Hyperlinkr?</p>
         <p class="has-text-grey">
           Hyperlinkr is a simple, Vue-based PWA that uses the
@@ -391,6 +391,7 @@ body {
   min-height: 100vh;
   color: #2c3e50;
   padding-top: 40px !important;
+  padding-bottom: 80px !important;
 
   &.dark {
     background-color: #191a1c;
