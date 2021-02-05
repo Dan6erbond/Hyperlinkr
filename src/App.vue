@@ -155,7 +155,7 @@
             Stats for Nerds
           </b-button>
         </p>
-        <pre v-if="showStats">{{ stats }}</pre>
+        <pre v-if="showStats" class="has-text-left">{{ stats }}</pre>
       </div>
     </div>
     <nav
@@ -214,7 +214,8 @@ export default {
       lastClipboardText: "",
       clipboardInterval: null,
       showStats: false,
-      stats: null,
+      href: "",
+      metadata: null,
     };
   },
   watch: {
@@ -256,6 +257,13 @@ export default {
     canCopy() {
       return this.title && this.url && this.urlValid;
     },
+    stats() {
+      return {
+        href: this.href,
+        metadata: this.metadata,
+        urlValid: this.urlValid,
+      };
+    },
   },
   methods: {
     async generate() {
@@ -269,6 +277,7 @@ export default {
           `https://url-metadata.herokuapp.com/api/metadata?url=${this.url}`,
         );
         this.title = res.data.data.title;
+        this.metadata = res.data.data;
       } catch (e) {
         console.error(e);
       }
@@ -375,9 +384,7 @@ export default {
       }
     }
 
-    this.stats = {
-      href: window.location.href,
-    };
+    this.href = window.location.href;
   },
   beforeDestroy() {
     this.clipboardInterval && clearInterval(this.clipboardInterval);
