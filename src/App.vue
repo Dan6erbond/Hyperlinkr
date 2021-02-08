@@ -98,11 +98,13 @@
             Copy
           </b-button>
         </div>
-        <section>
-          <pre
-            class="has-text-left"
-          ><code>{{ markdown ? markdown : '' }}</code></pre>
-        </section>
+        <b-input
+          type="textarea"
+          :rows="1"
+          readonly
+          v-model="markdown"
+          custom-class="is-family-monospace has-fixed-size"
+        />
       </div>
       <input type="hidden" id="markdown-copy" :value="markdown" />
       <div class="mb-6">
@@ -120,9 +122,13 @@
             Copy
           </b-button>
         </div>
-        <section>
-          <pre class="has-text-left"><code>{{ html ? html : '' }}</code></pre>
-        </section>
+        <b-input
+          type="textarea"
+          :rows="1"
+          readonly
+          v-model="html"
+          custom-class="is-family-monospace has-fixed-size"
+        />
       </div>
       <input type="hidden" id="html-copy" :value="html" />
       <div>
@@ -440,9 +446,10 @@ body {
       background-color: #2f2f2f;
     }
 
+    textarea,
     pre {
-      background-color: #2f2f2f;
-      color: #c7c7c7;
+      background-color: #2f2f2f !important;
+      color: #c7c7c7 !important;
     }
 
     .help.is-dark {
@@ -565,6 +572,15 @@ body {
       }
     }
   }
+}
+
+textarea {
+  box-shadow: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  background-color: whitesmoke !important;
+  font-size: 0.875em !important;
+  padding: 1.25rem 1.5rem !important;
 }
 
 @media only screen and (max-height: 750px) {
