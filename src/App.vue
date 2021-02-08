@@ -105,8 +105,8 @@
           v-model="markdown"
           custom-class="is-family-monospace has-fixed-size"
         />
+        <input type="hidden" id="markdown-copy" :value="markdown" />
       </div>
-      <input type="hidden" id="markdown-copy" :value="markdown" />
       <div class="mb-6">
         <div
           class="is-flex is-justify-content-space-between is-align-items-baseline"
@@ -129,9 +129,9 @@
           v-model="html"
           custom-class="is-family-monospace has-fixed-size"
         />
+        <input type="hidden" id="html-copy" :value="html" />
       </div>
-      <input type="hidden" id="html-copy" :value="html" />
-      <div>
+      <section>
         <p class="is-size-4">What is Hyperlinkr?</p>
         <p class="has-text-grey">
           Hyperlinkr is a simple, Vue-based PWA that uses the
@@ -162,7 +162,7 @@
           </b-button>
         </p>
         <pre v-if="showStats" class="has-text-left">{{ stats }}</pre>
-      </div>
+      </section>
     </div>
     <nav
       role="navigation"
