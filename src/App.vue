@@ -7,7 +7,7 @@
     >
       <div class="navbar-brand">
         <img
-          src="img/icons/icon.png"
+          src="/img/icons/icon.png"
           alt="Hyperlinkr"
           class="navbar-logo ml-4"
         />
