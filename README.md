@@ -8,7 +8,7 @@ A Vue-based PWA to generate markdown and HTML hyperlinks. See it in action [here
 
 ## What does it do?
 
-Hyperlinkr is a web app and PWA that uses the [Url Metadata API](https://url-metadata.herokuapp.com/) to fetch open graph or meta titles from a given URL and convert those inputs to markdown or HTML hyperlinks. This includes escaping special characters that might interfere with the output and the option to override the title manually.
+Hyperlinkr is a web app and PWA that uses a custom Netlify function to fetch open graph or meta titles from a given URL and convert those inputs to markdown or HTML hyperlinks. This includes escaping special characters that might interfere with the output and the option to override the title manually.
 
 Hyperlinkr polls your clipboard for changes, and allows you to quickly and intuitively paste URLs that you copied elsewhere, and also makes use of PWA `share_target`s so that you can share a web page and directly generate hyperlinks from them.
 
