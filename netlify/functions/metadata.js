@@ -15,6 +15,9 @@ exports.handler = async function(event) {
 
   return {
     statusCode: 200,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+    },
     body: JSON.stringify({
       title: $("title").text(),
       favicon: $('link[rel="shortcut icon"]').attr("href"),
