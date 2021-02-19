@@ -277,22 +277,13 @@ export default {
         return;
       }
 
-      if (this.url.match(/youtube.com\/watch/g)) {
-        const res = await this.$axios(
-          `https://noembed.com/embed?url=${this.url}`,
-        );
-        this.title = res.data.title;
-        this.metadata = res.data;
-        return;
-      }
-
       this.loading = true;
       try {
         const res = await this.$axios(
-          `https://url-metadata.herokuapp.com/api/metadata?url=${this.url}`,
+          `https://hyperlinkr.netlify.app/.netlify/functions/metadata?url=${this.url}`,
         );
-        this.title = res.data.data.title;
-        this.metadata = res.data.data;
+        this.title = res.data.title;
+        this.metadata = res.data;
       } catch (e) {
         console.error(e);
       }
