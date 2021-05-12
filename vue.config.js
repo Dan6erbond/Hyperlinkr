@@ -35,7 +35,6 @@ module.exports = {
           text: "url",
         },
       },
-      exclude: [/_redirects/],
     },
     themeColor: "#00c4a7",
     msTileColor: "#363636",
@@ -50,5 +49,8 @@ module.exports = {
     },
     // configure the workbox plugin
     workboxPluginMode: "GenerateSW",
+    workboxOptions: {
+      exclude: [/_redirects/],
+    },
   },
 };
