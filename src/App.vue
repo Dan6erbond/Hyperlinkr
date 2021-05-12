@@ -67,10 +67,22 @@
         </b-field>
       </form>
       <div class="mb-6">
-        <p class="is-size-4">Preview</p>
         <div v-if="canCopy">
-          <div class="box">
-            <a :href="url">{{ title }}</a>
+          <div
+            class="is-flex is-justify-content-space-between is-align-items-baseline"
+          >
+            <p class="is-size-4">Preview</p>
+            <b-button
+              size="is-small"
+              icon-left="content-copy"
+              @click="copyPreviewLink"
+              :type="darkMode ? 'is-dark' : 'is-light'"
+            >
+              Copy
+            </b-button>
+          </div>
+          <div class="link-preview">
+            <a :href="url" ref="previewLink">{{ title }}</a>
           </div>
           <p class="has-text-grey">
             Your hyperlink will appear like this on platforms which support
@@ -336,6 +348,29 @@ export default {
       copyElm.setAttribute("type", "hidden");
       window.getSelection().removeAllRanges();
     },
+    copyPreviewLink() {
+      const range = document.createRange();
+      range.selectNode(this.$refs.previewLink);
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+      try {
+        const successful = document.execCommand("copy");
+        if (successful) {
+          this.$buefy.toast.open({
+            message: "Successfully copied hyperlink to clipboard!",
+            type: "is-success",
+          });
+        } else {
+          this.$buefy.toast.open({
+            message: "Error copying hyperlink to clipboard.",
+            type: "is-danger",
+          });
+        }
+      } catch (err) {
+        console.error("Oops, unable to copy");
+      }
+    },
     paste() {
       this.url = this.clipboardText;
       this.lastClipboardText = this.clipboardText;
@@ -440,6 +475,10 @@ body {
     pre {
       background-color: #2f2f2f !important;
       color: #c7c7c7 !important;
+    }
+
+    .link-preview {
+      background-color: #2f2f2f !important;
     }
 
     .help.is-dark {
@@ -571,6 +610,13 @@ textarea {
   background-color: whitesmoke !important;
   font-size: 0.875em !important;
   padding: 1.25rem 1.5rem !important;
+}
+
+.link-preview {
+  padding: 0.75rem 1rem !important;
+  display: block;
+  background-color: whitesmoke !important;
+  margin-bottom: 0.25rem;
 }
 
 @media only screen and (max-height: 750px) {
