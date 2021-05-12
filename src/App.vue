@@ -368,6 +368,8 @@ export default {
       } catch (err) {
         console.error("Oops, unable to copy");
       }
+
+      window.getSelection().removeAllRanges();
     },
     paste() {
       this.url = this.clipboardText;
