@@ -117,7 +117,7 @@
           v-model="markdown"
           custom-class="is-family-monospace has-fixed-size"
         />
-        <input type="hidden" id="markdown-copy" :value="markdown" />
+        <input type="hidden" ref="markdownCopy" :value="markdown" />
       </div>
       <div class="mb-6">
         <div
@@ -141,7 +141,7 @@
           v-model="html"
           custom-class="is-family-monospace has-fixed-size"
         />
-        <input type="hidden" id="html-copy" :value="html" />
+        <input type="hidden" ref="htmlCopy" :value="html" />
       </div>
       <section>
         <p class="is-size-4">What is Hyperlinkr?</p>
@@ -301,9 +301,8 @@ export default {
       this.loading = false;
     },
     copyHtml() {
-      const copyElm = document.querySelector("#html-copy");
-      copyElm.setAttribute("type", "text");
-      copyElm.select();
+      this.$refs.htmlCopy.setAttribute("type", "text");
+      this.$refs.htmlCopy.select();
       try {
         const successful = document.execCommand("copy");
         if (successful) {
@@ -321,13 +320,12 @@ export default {
         console.error("Oops, unable to copy");
       }
 
-      copyElm.setAttribute("type", "hidden");
+      this.$refs.htmlCopy.setAttribute("type", "hidden");
       window.getSelection().removeAllRanges();
     },
     copyMarkdown() {
-      const copyElm = document.querySelector("#markdown-copy");
-      copyElm.setAttribute("type", "text");
-      copyElm.select();
+      this.$refs.markdownCopy.setAttribute("type", "text");
+      this.$refs.markdownCopy.select();
       try {
         const successful = document.execCommand("copy");
         if (successful) {
@@ -345,7 +343,7 @@ export default {
         console.error("Oops, unable to copy");
       }
 
-      copyElm.setAttribute("type", "hidden");
+      this.$refs.markdownCopy.setAttribute("type", "hidden");
       window.getSelection().removeAllRanges();
     },
     copyPreviewLink() {
