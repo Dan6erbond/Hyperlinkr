@@ -1,4 +1,4 @@
-const { parser } = require("html-metadata-parser");
+const Meta = require("html-metadata-parser");
 
 exports.handler = async function(event) {
   const url = event.queryStringParameters.url;
@@ -7,7 +7,7 @@ exports.handler = async function(event) {
     meta: { title, description },
     og: { images: ogImages },
     images,
-  } = await parser(url);
+  } = await Meta.parser(url);
 
   let image;
   if (ogImages.length) {
