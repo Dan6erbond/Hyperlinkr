@@ -1,17 +1,20 @@
-const cheerio = require("cheerio");
-const fetch = require("node-fetch");
+const { parser } = require("html-metadata-parser");
 
 exports.handler = async function(event) {
   const url = event.queryStringParameters.url;
 
-  const res = await fetch(url);
-  const html = await res.text();
-  const $ = cheerio.load(html);
+  const {
+    meta: { title, description },
+    og: { images: ogImages },
+    images,
+  } = await parser(url);
 
-  const getMetatag = (name) =>
-    $(`meta[name=${name}]`).attr("content") ||
-    $(`meta[property="og:${name}"]`).attr("content") ||
-    $(`meta[property="twitter:${name}"]`).attr("content");
+  let image;
+  if (ogImages.length) {
+    image = ogImages[0];
+  } else if (images.length) {
+    image = images[0];
+  }
 
   return {
     statusCode: 200,
@@ -19,11 +22,9 @@ exports.handler = async function(event) {
       "Access-Control-Allow-Origin": "*",
     },
     body: JSON.stringify({
-      title: $("title").text(),
-      favicon: $('link[rel="shortcut icon"]').attr("href"),
-      description: getMetatag("description"),
-      image: getMetatag("image"),
-      author: getMetatag("author"),
+      title,
+      description,
+      image,
     }),
   };
 };
